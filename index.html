@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+</head>
+<body>
+    <h1 class="name">Hello</h1>
+    <div class="chatWindow"> message: </div>
+    <input type="text">
+    <button type="button"></button>
+<script>
+    const socket = io('http://localhost:3000');
+    let name = prompt('Enter you name');
+    document.querySelector('.name').innerHTML+=` ${name}`;
+
+    socket.on('message',(data)=>{
+        document.querySelector('.name').innerHTML+=data;
+    });
+    document.querySelector('button').addEventListener('click',()=>{
+        const data = document.querySelector('input').value;
+        socket.emit('new-msg', data)
+    })
+</script>
+</body>
+</html>
